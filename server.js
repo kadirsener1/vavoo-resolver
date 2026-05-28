@@ -87,7 +87,6 @@ async function resolveUrl(playUrl) {
   return json[0].url;
 }
 
-// Resolve endpoint
 app.get("/resolve", async (req, res) => {
   const playUrl = req.query.url;
   if (!playUrl) {
@@ -102,21 +101,19 @@ app.get("/resolve", async (req, res) => {
   }
 });
 
-// Status endpoint
 app.get("/status", async (req, res) => {
   res.json({
     status: "running",
     authenticated: !!authSig,
     sigAge: authTs ? (Date.now() - authTs) / 1000 : null,
-    server: "Render.com"
+    server: "Fly.io Frankfurt"
   });
 });
 
-// Ana sayfa
 app.get("/", (req, res) => {
-  res.send("Vavoo Resolver\n\nEndpoints:\n  /resolve?url=<play_url>\n  /status");
+  res.send("Vavoo Resolver - Fly.io\n\n/resolve?url=<play_url>\n/status");
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log("Server running on port " + PORT);
 });
